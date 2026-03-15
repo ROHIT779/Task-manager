@@ -391,6 +391,14 @@ Task Manager Service follows a Client-Server architecture -
 * When updating a task, a function checks whether updating the task can create cyclical dependencies or not. If a cycle is found, an error is thrown and the task is not updated, else the task is updated.  
 * **GET** */service/tasks/{task_id}/execution-order* returns the current task details and a valid execution order of the task serially.  
 
+### Validation and Error Handling  
+* When creating a task with non-existing dependent task IDs, or retrieving a task with non-existing task ID, or updating a task with non-existing task ID, or updating a task with non-existing dependent task ID, **NoSuchTaskException** is thrown(Status = 404 NOT FOUND).  
+* When updating a task, if a task ID matches with a dependent task ID, **DuplicateTaskException** is thrown(Status = 400 BAD REQUEST).  
+* If a task is blocked as its dependencies are not DONE yet, and the task is updated to status IN_PROGRESS, **InvalidOperationException** will be thrown(Status = 403 FORBIDDEN).  
+* A task can only move from TO_DO to IN_PROGRESS, and IN_PROGRESS to DONE states. Any other status update throws **InvalidOperationException**(Status = 403 FORBIDDEN).  
+* When updating a task, if a cyclical dependency is found, **InvalidDependencyException** is thrown(Status = 400 BAD REQUEST).  
+* For any generic exception GlobalExceptionHandler is used.  
+
 ### Run In Local
 * Prerequisite - Docker and Docker Compose should be installed.  
 * Go to Task-manager/task-manager-service/ directory.
