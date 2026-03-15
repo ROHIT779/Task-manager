@@ -17,10 +17,10 @@ A task has the following parameters:
 • Defining dependencies between tasks  
 • Providing a valid execution order based on dependencies  
 
-### Instruments used:  
+### Tools used:  
 
-|        Name         |        Instrument         |
-| :-----------------: | :-----------------------: |
+|        Name         |           Tool            |
+| :-----------------: |:-------------------------:|
 |    **Language**     |          Java 21          |
 |    **Framework**    |     Spring Boot 4.0.3     |
 |   **Build Tool**    |           Maven           |
@@ -31,7 +31,7 @@ A task has the following parameters:
 
 ### API Documentation  
 * Create Task  
-Endpoint: POST /service/tasks  
+Endpoint: **POST** */service/tasks*  
 Request Body: 
 ```
   {
@@ -67,8 +67,8 @@ Status: Error
 }
 ```
 
-Sample Request
-URI: POST /service/tasks  
+Sample Request  
+Endpoint: **POST** */service/tasks*  
 ```
   {
   "title": "Task Title",
@@ -91,7 +91,7 @@ Status: 201 CREATED
 ```
 
 Sample Request:  
-URI: POST /service/tasks  
+Endpoint: **POST** */service/tasks*  
 ```
 {
     "title": "Task Title",
@@ -109,7 +109,8 @@ Status: Error 404 NOT FOUND
 ```
 
 * Retrieve Task  
-URI: GET /service/tasks/{task_id}  
+
+Endpoint: **GET** */service/tasks/{task_id}*  
 
 Response:  
 Status: 200 OK  
@@ -131,7 +132,7 @@ Status: Error
 }
 ```
 Sample Request:  
-URI: GET /service/tasks/1
+Endpoint: **GET** */service/tasks/1*
 
 Sample Response:  
 Status: 200 OK
@@ -154,7 +155,8 @@ Status: 404 NOT FOUND
 ```
 
 * Update Task  
-URI: PUT /service/tasks/{task_id}
+
+Endpoint: **PUT** */service/tasks/{task_id}*
 
 Response:  
 Status: 200 OK
@@ -175,9 +177,10 @@ Status: Error
 ```
 
 Sample Request  
+
 Scenario: Success. Updation is successful. Task is moved from TO_DO to IN_PROGRESS  
 
-Endpoint: PUT /service/tasks/1
+Endpoint: **PUT** */service/tasks/1*
 Request Body:  
 ```
 {
@@ -203,7 +206,7 @@ Status: 200 OK
 
 Scenario: Failure. Updation has failed. Invalid Task ID is passed in URI.  
 
-Endpoint: PUT /service/tasks/55  
+Endpoint: **PUT** */service/tasks/55*  
 Request Body:  
 ```
 {
@@ -223,7 +226,7 @@ Status: 404 NOT FOUND
 ```
 Scenario: Failure. Updation has failed. Status of Task ID = 2 is moved to DONE from TO_DO directly.  
 
-Endpoint: PUT /service/tasks/2  
+Endpoint: **PUT** */service/tasks/2*  
 Request Body:
 ```
 {
@@ -244,7 +247,7 @@ Status: 403 FORBIDDEN
 
 Scenario: Failure. Updation has failed. Task 4 is dependent on Task 1. Now Task 1 is updated to add a dependency on Task 4, resulting in circular dependency.  
 
-Endpoint: PUT /service/tasks/1  
+Endpoint: **PUT** */service/tasks/1*  
 Request Body:
 ```
 {
@@ -264,7 +267,7 @@ Status: 400 BAD REQUEST
 ```
 
 * Retrieve Task Execution Order  
-  URI: GET /service/tasks/{task_id}/execution-order
+  Endpoint: **GET** */service/tasks/{task_id}/execution-order*
 
 Response:  
 Status: 200 OK
@@ -309,7 +312,7 @@ Status: Error
 Sample Request:  
 Scenario: Success. Retrieve Task Execution Order Successful. Task 4 depends on Task 1 and Task 2.  
 
-URI: GET /service/tasks/4/execution-order
+Endpoint: **GET** */service/tasks/4/execution-order*
 
 Sample Response:  
 Status: 200 OK
@@ -349,7 +352,8 @@ Status: 200 OK
 
 Scenario: Failure. Retrieve Task Execution Order Failed. Invalid Task ID is Given.  
 
-URI: GET /service/tasks/55/execution-order
+Endpoint: **GET** */service/tasks/55/execution-order*  
+Sample Response:  
 Status: 404 NOT FOUND
 ```
 {
