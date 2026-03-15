@@ -103,33 +103,34 @@ public class TaskHelper {
     public boolean isCyclePresent(Task task, TaskDTO taskDTO){
         Task clonedTask = new Task(task.getTitle(), task.getDescription(),
                 task.getStatus(), task.getCreatedAt(), task.getDependencies());
+        clonedTask.setId(task.getId());
         for(long taskId : taskDTO.getDependencies()){
             Task newDependency = taskRepository.findById(taskId).get();
             task.addDependency(newDependency);
         }
-        Set<Task> visited = new HashSet<>();
-        Set<Task> recStack = new HashSet<>();
+        Set<Long> visited = new LinkedHashSet<>();
+        Set<Long> recStack = new LinkedHashSet<>();
         if(checkCycleInDependencies(clonedTask, visited, recStack)){
             return true;
         }
         return false;
     }
 
-    public boolean checkCycleInDependencies(Task task, Set<Task> visited, Set<Task> recStack){
-        if(recStack.contains(task)){
+    public boolean checkCycleInDependencies(Task task, Set<Long> visited, Set<Long> recStack){
+        if(recStack.contains(task.getId())){
             return true;
         }
-        if(visited.contains(task)){
+        if(visited.contains(task.getId())){
             return false;
         }
-        visited.add(task);
-        recStack.add(task);
+        visited.add(task.getId());
+        recStack.add(task.getId());
         for(Task dependency : task.getDependencies()){
             if(checkCycleInDependencies(dependency, visited, recStack)){
                 return true;
             }
         }
-        recStack.remove(task);
+        recStack.remove(task.getId());
         return false;
     }
 
