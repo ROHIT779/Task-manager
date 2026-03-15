@@ -376,4 +376,12 @@ Task Manager Service follows a Client-Server architecture -
 * Client requests server to create/retrieve/update task and it's dependencies.  
 * Server processes the request and returns response. 
  
-![Architecture Overview Diagram](./static/architecture-overview.png)
+![Architecture Overview Diagram](./static/architecture-overview.png)  
+
+### Design Considerations  
+* Enum is used for Task Status (TO_DO, IN_PROGRESS, DONE) - TO_DO=0, IN_PROGRESS=1, DONE=2.  
+* By definition a task has the following attributes: *id*, *title*, *description*, *status*, *createdAt*. A new attribute *dependencies* is added in Task which represents many-to-many relationship between tasks. Set<Task> is used as data type for *dependencies*.  
+* When creating a task, only *title*, *description* and *dependencies* are required. *status* is set to TO_DO by default, *createdAt* is set to current timestamp, *id* is generated.  
+* It is assumed that a task can only move from TO_DO to IN_PROGRESS, and IN_PROGRESS to DONE. No other status updates are valid.  
+* When updating a task, a function checks whether updating the task can create cyclical dependencies or not. If a cycle is found, an error is thrown and the task is not updated, else the task is updated.  
+* **GET** */service/tasks/{task_id}/execution-order* returns the current task details and a valid execution order of the task serially.
