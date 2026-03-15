@@ -389,4 +389,11 @@ Task Manager Service follows a Client-Server architecture -
 * When creating a task, only *title*, *description* and *dependencies* are required. *status* is set to TO_DO by default, *createdAt* is set to current timestamp, *id* is generated.  
 * It is assumed that a task can only move from TO_DO to IN_PROGRESS, and IN_PROGRESS to DONE. No other status updates are valid.  
 * When updating a task, a function checks whether updating the task can create cyclical dependencies or not. If a cycle is found, an error is thrown and the task is not updated, else the task is updated.  
-* **GET** */service/tasks/{task_id}/execution-order* returns the current task details and a valid execution order of the task serially.
+* **GET** */service/tasks/{task_id}/execution-order* returns the current task details and a valid execution order of the task serially.  
+
+### Run In Local
+* Prerequisite - Docker and Docker Compose should be installed.  
+* Go to Task-manager/task-manager-service/ directory.
+* Run ```docker compose up``` from the directory. If getting permission denied error use ```sudo docker compose up```.  
+* This will start two services - task-manager-service and postgreSQL service. ```docker ps``` can be used to check the running containers.  
+* Base URL will be ```http://localhost:8081```. APIs can be hit appending the endpoints to the base URL. For example, **GET** ```http://localhost:8081/service/tasks/123```.
