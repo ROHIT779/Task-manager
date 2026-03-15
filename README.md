@@ -20,7 +20,7 @@ A task has the following parameters:
 ### Tools used:  
 
 |        Name         |           Tool            |
-| :-----------------: |:-------------------------:|
+| :-----------------: | :-----------------------: |
 |    **Language**     |          Java 21          |
 |    **Framework**    |     Spring Boot 4.0.3     |
 |   **Build Tool**    |           Maven           |
@@ -361,3 +361,19 @@ Status: 404 NOT FOUND
     "message": "No such task exists. task_id: 55"
 }
 ```
+
+### API Request Flow  
+Task Manager Service follows a layered structure -  
+* Controller Layer (TaskResource) - Responsible for accepting the request and returning response from clients.  
+* Service Layer (TaskHelper) - Responsible for business logic and input validations.  
+* Persistence Layer (TaskRepository) - Responsible for managing interactions with the database.  
+* Database Layer - Responsible for storing and retrieving data from database.  
+
+![API Request Flow Diagram](./static/api-request-flow.png)
+
+### Architecture Overview  
+Task Manager Service follows a Client-Server architecture -  
+* Client requests server to create/retrieve/update task and it's dependencies.  
+* Server processes the request and returns response. 
+ 
+![Architecture Overview Diagram](./static/architecture-overview.png)
