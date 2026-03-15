@@ -29,7 +29,6 @@ public class TaskResource {
 
     @GetMapping("/{task_id}")
     public ResponseEntity getTask(@PathVariable("task_id") String taskId){
-        System.out.println("********************** "+taskId+"********************");
         TaskDTO taskDTO = helper.getTask(taskId);
         return new ResponseEntity(taskDTO, HttpStatus.OK);
     }

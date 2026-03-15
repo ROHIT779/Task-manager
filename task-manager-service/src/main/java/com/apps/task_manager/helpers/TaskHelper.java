@@ -9,7 +9,6 @@ import com.apps.task_manager.exception.InvalidOperationException;
 import com.apps.task_manager.exception.NoSuchTaskException;
 import com.apps.task_manager.model.Task;
 import com.apps.task_manager.repository.TaskRepository;
-import com.apps.task_manager.validator.TaskValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +21,6 @@ public class TaskHelper {
 
     @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
-    private TaskValidator validator;
 
     private static final String NO_SUCH_TASK_EXISTS_EXCEPTION_MESSAGE = "No such task exists. task_id: ";
 
@@ -93,7 +89,6 @@ public class TaskHelper {
     }
 
     public boolean isTaskBlocked(Task task, TaskDTO taskDTO){
-        System.out.println("CCCCCCCCCCCCCC");
         if(taskDTO.getStatus() != TaskStatus.TO_DO){
             Set<Task> dependencies = task.getDependencies();
             for(Task dependency : dependencies){
@@ -145,9 +140,6 @@ public class TaskHelper {
         Set<Task> tasksChecked = new HashSet<>();
         Set<Task> executionOrder = new LinkedHashSet<>();
         Set<TaskDTO> executionOrderDTO = new LinkedHashSet<>();
-        System.out.println("Task ID: " + task.getId());
-        System.out.println("Task Dependencies: " + task.getDependencies().stream().map(t -> t.getId().toString()).reduce("",(id1,id2)->String.valueOf(id1)+", "+String.valueOf(id2)));
-        System.out.println();
         for(Task dependency : task.getDependencies()){
             if(!tasksChecked.contains(dependency)){
                 getExecutionOrderRecursive(dependency, taskStack, tasksChecked);
@@ -156,10 +148,6 @@ public class TaskHelper {
         while(!taskStack.isEmpty()){
             executionOrder.add(taskStack.pop());
         }
-        for(Task t : executionOrder){
-            System.out.print(t.getId() + " -> ");
-        }
-        System.out.println("Tasks in execution order: " + executionOrder.size());
         List<Task> executionOrderList = new ArrayList<>(executionOrder);
         Collections.reverse(executionOrderList);
         for(Task orderedTask : executionOrderList){
@@ -190,7 +178,6 @@ public class TaskHelper {
 
     private boolean isValidTask(TaskDTO taskDTO){
         long taskId = taskDTO.getId();
-        System.out.println("Task ID in isValidTask = "+taskId);
         Set<Long> dependencies = taskDTO.getDependencies();
         for(long dependency : dependencies){
             taskRepository.findById(dependency).orElseThrow(() ->
@@ -205,9 +192,7 @@ public class TaskHelper {
     }
 
     private boolean checkValidStatusUpdate(Task task, TaskDTO taskDTO){
-        System.out.println("AAAAAAAAAAAAA");
         if(task.getStatus() != taskDTO.getStatus().getStatus()){
-            System.out.println("BBBBBBBBBBBBB");
             if(task.getStatus() == TaskStatus.TO_DO.getStatus() && taskDTO.getStatus().getStatus() == TaskStatus.IN_PROGRESS.getStatus()){
                 return true;
             } else if(task.getStatus() == TaskStatus.IN_PROGRESS.getStatus() && taskDTO.getStatus().getStatus() == TaskStatus.DONE.getStatus()){
