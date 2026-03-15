@@ -146,6 +146,11 @@ Status: 200 OK
     "status": "TO_DO"
 }
 ```
+
+Sample Request:  
+Endpoint: **GET** */service/tasks/100*  
+
+Sample Response:  
 Status: 404 NOT FOUND
 ```
 {
@@ -180,7 +185,7 @@ Sample Request
 
 Scenario: Success. Updation is successful. Task is moved from TO_DO to IN_PROGRESS  
 
-Endpoint: **PUT** */service/tasks/1*
+Endpoint: **PUT** */service/tasks/1*  
 Request Body:  
 ```
 {
