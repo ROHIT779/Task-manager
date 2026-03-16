@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "6a0a99b7-7853-4d28-ac95-2b7b8e083fdd",
+		"name": "task-manager-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16154884"
+	},
+	"item": [
+		{
+			"name": "create-task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Task Title\",\n    \"description\": \"Task Description\",\n    \"dependencies\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/service/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"service",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-task",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/service/tasks/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"service",
+						"tasks",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-task",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Task Title\",\n    \"description\": \"Task Description\",\n    \"status\": \"DONE\",//TO_DO, IN_PROGRESS\n    \"dependencies\": [2,3]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/service/tasks/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"service",
+						"tasks",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-execution-order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/service/tasks/5/execution-order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"service",
+						"tasks",
+						"5",
+						"execution-order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
