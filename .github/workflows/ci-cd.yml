@@ -1,4 +1,7 @@
 name: Spring Boot CI/CD Pipeline
+defaults:
+  run:
+    working-directory: ./task-manager-service
 
 on:
   push:
